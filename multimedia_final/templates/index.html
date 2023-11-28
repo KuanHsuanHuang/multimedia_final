@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera App</title>
+    <script>
+        var currentMode = 'camera';
+
+        function takeSnapshot() {
+            if (currentMode === 'camera') {
+                fetch('/take_snapshot', {
+                    method: 'POST',
+                    body: new URLSearchParams({ mode: currentMode }),
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                });
+            }
+        }
+
+        function previewImage(input) {
+            if (input.files && input.files[0]) {
+                currentMode = 'image';
+                document.getElementById('camera-mode').style.display = 'none';
+                document.getElementById('image-mode').style.display = 'block';
+
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById('image-preview').src = e.target.result;
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function setMode(mode) {
+            currentMode = mode;
+
+            if (mode === 'camera') {
+                document.getElementById('camera-mode').style.display = 'block';
+                document.getElementById('image-mode').style.display = 'none';
+            } else {
+                document.getElementById('camera-mode').style.display = 'none';
+                document.getElementById('image-mode').style.display = 'block';
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Camera App</h1>
+
+    <button onclick="setMode('camera')">拍照模式</button>
+    <button onclick="setMode('image')">選擇照片模式</button>
+
+    <div id="camera-mode">
+        <img src="{{ url_for('video_feed') }}" width="640" height="480" id="camera-preview">
+        <button onclick="takeSnapshot()">拍照</button>
+    </div>
+
+    <div id="image-mode" style="display: none;">
+        <h2>選擇本地圖片</h2>
+        <input type="file" accept="image/*" onchange="previewImage(this)">
+        <img id="image-preview" style="max-width: 100%; max-height: 100%;">
+    </div>
+</body>
+</html>
