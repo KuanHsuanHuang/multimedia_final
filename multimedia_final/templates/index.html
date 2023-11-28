@@ -53,11 +53,12 @@
 </head>
 <body>
     <style>
+
+        
+
+        
         body{
-			background-image: url("pic/bg.jpg");
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-size: cover;
+			background-color: white;
 		}
 
 		h1{
@@ -120,7 +121,7 @@
 }
 
 .dropdown-content a:hover {
-	background-color:rgba(138, 118, 174, 0.8);
+	background-color:rgba(223, 206, 255, 0.8);
   color:white;
 }
 
@@ -129,7 +130,7 @@
 }
 
 .dropdown:hover .dropbtn {
-    background-color:rgba(138, 118, 174, 0.8);
+    background-color:rgba(79, 40, 151, 0.8);
 }
 
 .na{
@@ -147,6 +148,7 @@
     #pp{
     	color: rgba(138, 118, 174, 0.7);
     	background-color: rgba(138, 118, 174, 0.7);
+        align-self: center;
     }
 
     #p{
@@ -156,17 +158,19 @@
     </style>
     <strong><h1>魔法相機</h1></strong>
     <p id="popo"></p>
-    <div class="na"></div>
-    <button onclick="setMode('camera')">拍照模式</button>
-    <button onclick="setMode('image')">選擇照片模式</button>
-    </div><p id="popo"></p>
+    <div class="na">
+    <div class="dropdown">
+    <button onclick="setMode('camera')" class="dropbtn">拍照模式</button>
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+    <button onclick="setMode('image')" class="dropbtn">選擇照片模式</button>
+    </div><p id="popo"></p></div>
 
     <table border id="pp"><tr>
     <td>
         <div id="camera-mode">
         <img src="{{ url_for('video_feed') }}" width="640" height="480" id="camera-preview">
-        <button onclick="takeSnapshot()">拍照</button>
-    </div>
+       <br>  <div class="dropdown"></div><button onclick="takeSnapshot()"  class="dropbtn">拍照</button></br>
+    </div></div>
     
     <div id="image-mode" style="display: none;">
         <h2>選擇本地圖片</h2>
@@ -178,11 +182,11 @@
 
     <td>
         <h1>請挑選濾鏡</h1>
-        <button>a</button>
-        <button>b</button>
-        <button>c</button>
-        <button>d</button>
-        <button>e</button>
+        <button class="dropbtn"><a>黑白風</a></button>
+        <button class="dropbtn"><a>像素風</a></button>
+        <button class="dropbtn"><a>復古風</a></button>
+        <button class="dropbtn"><a>鮮豔風</a></button>
+        <button class="dropbtn"><a>戲劇風</a></button>
         
    </td>
     </tr></table>
