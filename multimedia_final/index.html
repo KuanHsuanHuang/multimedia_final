@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera App</title>
+    <script>
+        var currentMode = 'camera';
+
+        function takeSnapshot() {
+            if (currentMode === 'camera') {
+                fetch('/take_snapshot', {
+                    method: 'POST',
+                    body: new URLSearchParams({ mode: currentMode, apply_black_and_white_filter: 'true' }),
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                });
+            }
+        }
+
+        function previewImage(input) {
+            if (input.files && input.files[0]) {
+                currentMode = 'image';
+                document.getElementById('camera-mode').style.display = 'none';
+                document.getElementById('image-mode').style.display = 'block';
+
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById('image-preview').src = e.target.result;
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function setMode(mode) {
+            currentMode = mode;
+
+            if (mode === 'camera') {
+                document.getElementById('camera-mode').style.display = 'block';
+                document.getElementById('image-mode').style.display = 'none';
+            } else {
+                document.getElementById('camera-mode').style.display = 'none';
+                document.getElementById('image-mode').style.display = 'block';
+            }
+        }
+
+        function activateBlackAndWhiteMode() {
+            fetch('/activate_black_and_white_mode', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);  // 這裡可以根據後端返回的訊息進行相應處理
+            });
+        }
+    </script>
+</head>
+<body>
+    <style>
+
+        body{
+			background-color: white;
+		}
+
+		h1{
+			color: white;
+			text-align:center; 
+			padding: 80px;
+			margin: 50px;
+			background-color:rgba(138, 118, 174, 0.8);
+			
+		}
+
+		h2{
+			color: white;
+			background-color: rgba(138, 118, 174, 1);
+			text-align: center;
+		}
+
+
+		p{
+			color:white;
+			font-size:20px;
+		}
+
+
+		a{
+			color: black;
+		}
+
+		a:hover{
+			color: white;
+		}
+
+		.dropbtn {
+    background-color:rgba(138, 118, 174, 0.4);
+    color: black;
+    padding: 20px;
+    font-size: 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color:rgba(138, 118, 174, 0.7);
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 20px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+	background-color:rgba(223, 206, 255, 0.8);
+  color:white;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color:rgba(79, 40, 151, 0.8);
+}
+
+.na{
+	text-align: center;
+}
+
+	#popo{
+
+		color:rgba(138, 118, 174, 0.7);
+		border-style:double;
+		text-align:center;
+	}
+
+		
+    #pp{
+    	color: rgba(138, 118, 174, 0.7);
+    	background-color: rgba(138, 118, 174, 0.7);
+        align-self: center;
+    }
+
+    #p{
+    	color: red;
+    	background-color: yellow;
+    }
+    </style>
+    <strong><h1>魔法相機</h1></strong>
+    <p id="popo"></p>
+    <div class="na">
+    <div class="dropdown">
+    <button onclick="setMode('camera')" class="dropbtn">拍照模式</button>
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+    <button onclick="setMode('image')" class="dropbtn">選擇照片模式</button>
+    </div><p id="popo"></p></div>
+
+    <table id="pp"><tr>
+    <td>
+        <div id="camera-mode">
+        <img src="{{ url_for('video_feed') }}" width="640" height="480" id="camera-preview">
+       <br>  <div class="dropdown"></div><button onclick="takeSnapshot()"  class="dropbtn">拍照</button></br>
+    </div></div>
+    
+    <div id="image-mode" style="display: none;">
+        <h2>選擇本地圖片</h2>
+        <input type="file" accept="image/*" onchange="previewImage(this)">
+        <img id="image-preview" style="max-width: 100%; max-height: 100%;">
+    </div></td>
+
+
+
+    <td>
+        <h1>請挑選濾鏡</h1>
+        <button onclick="activateBlackAndWhiteMode()" class="dropbtn"><a>黑白風</a></button>
+        <button class="dropbtn"><a>像素風</a></button>
+        <button class="dropbtn"><a>復古風</a></button>
+        <button class="dropbtn"><a>鮮豔風</a></button>
+        <button class="dropbtn"><a>戲劇風</a></button>
+        
+   </td>
+    </tr></table>
+
+</body>
+</html>
