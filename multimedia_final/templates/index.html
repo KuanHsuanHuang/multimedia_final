@@ -69,13 +69,14 @@
 
         body{
 			background-color: white;
+            
 		}
 
 		h1{
 			color: white;
 			text-align:center; 
 			padding: 80px;
-			margin: 50px;
+			margin: 30px;
 			background-color:rgba(138, 118, 174, 0.8);
 			
 		}
@@ -101,6 +102,9 @@
 			color: white;
 		}
 
+      
+		
+
 		.dropbtn {
     background-color:rgba(138, 118, 174, 0.4);
     color: black;
@@ -108,11 +112,16 @@
     font-size: 20px;
     border: none;
     cursor: pointer;
+    border-radius: 50%;
 }
 
 .dropdown {
     position: relative;
     display: inline-block;
+    border-radius: 50%;
+    border: none;
+    margin-left:auto;
+    margin-right:auto;
 }
 
 .dropdown-content {
@@ -121,6 +130,8 @@
     background-color:rgba(138, 118, 174, 0.7);
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    border-radius: 50%;
+    border: none;
 }
 
 .dropdown-content a {
@@ -128,19 +139,27 @@
     padding: 12px 20px;
     text-decoration: none;
     display: block;
+    border-radius: 50%;
+    border: none;
 }
 
 .dropdown-content a:hover {
-	background-color:rgba(223, 206, 255, 0.8);
+	background-color:rgba(81, 9, 216, 0.8);
   color:white;
+  border-radius: 50%;
+    border: none;
 }
 
 .dropdown:hover .dropdown-content {
     display: block;
+    border-radius: 50%;
+    border: none;
 }
 
 .dropdown:hover .dropbtn {
     background-color:rgba(79, 40, 151, 0.8);
+    border-radius: 50%;
+    border: none;
 }
 
 .na{
@@ -149,38 +168,46 @@
 
 	#popo{
 
-		color:rgba(138, 118, 174, 0.7);
+		color:rgba(83, 0, 238, 0.7);
 		border-style:double;
 		text-align:center;
 	}
 
 		
     #pp{
-    	color: rgba(138, 118, 174, 0.7);
+    	color: rgba(89, 0, 255, 0.7);
     	background-color: rgba(138, 118, 174, 0.7);
         align-self: center;
     }
 
     #p{
-    	color: red;
-    	background-color: yellow;
+    	text-align:center;
+    	background-color: rgb(255, 255, 255);
     }
+
+table{
+    margin-left:auto;
+    margin-right:auto;
+}
+
     </style>
-    <strong><h1>魔法相機</h1></strong>
+    <strong><h1>魔法相機 &#129337;</h1></strong>
     <p id="popo"></p>
     <div class="na">
     <div class="dropdown">
-    <button onclick="setMode('camera')" class="dropbtn">拍照模式</button>
-    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-    <button onclick="setMode('image')" class="dropbtn">選擇照片模式</button>
+    <button onclick="setMode('camera')" class="dropbtn"><a>拍照模式</a></button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    |
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button onclick="setMode('image')" class="dropbtn"><a>選擇照片模式</a></button>
     </div><p id="popo"></p></div>
 
-    <table id="pp"><tr>
+    <table border id="pp"><tr>
     <td>
         <div id="camera-mode">
         <img src="{{ url_for('video_feed') }}" width="640" height="480" id="camera-preview">
-       <br>  <div class="dropdown"></div><button onclick="takeSnapshot()"  class="dropbtn">拍照</button></br>
-    </div></div>
+        </td>
+    </div>
     
     <div id="image-mode" style="display: none;">
         <h2>選擇本地圖片</h2>
@@ -192,13 +219,30 @@
 
     <td>
         <h1>請挑選濾鏡</h1>
+        <div class="dropdown">
+        &nbsp;&nbsp;&nbsp;
         <button onclick="activateBlackAndWhiteMode()" class="dropbtn"><a>黑白風</a></button>
-        <button class="dropbtn"><a>像素風</a></button>
-        <button class="dropbtn"><a>復古風</a></button>
-        <button class="dropbtn"><a>鮮豔風</a></button>
-        <button class="dropbtn"><a>戲劇風</a></button>
+        &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+        <button onclick="setMode('camera')" class="dropbtn"><a>像素風</a></button>
+        &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+        <button onclick="setMode('camera')" class="dropbtn"><a>復古風</a></button>
         
-   </td>
+        <br> <br>
+        &nbsp;&nbsp;&nbsp;
+        <button onclick="setMode('camera')" class="dropbtn"><a>鮮豔風</a></button>
+        &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+        <button onclick="setMode('camera')" class="dropbtn"><a>戲劇風</a></button>
+        &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+        <button onclick="setMode('camera')" class="dropbtn"><a>底片風</a></button>
+        
+        </div>
+    <br> <br>  
+    <div class="dropdown">
+        &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+    <button onclick="takeSnapshot()"  class="dropbtn" id="p">拍照</button></br>
+    </div>
+    </td>
     </tr></table>
 
 </body>
