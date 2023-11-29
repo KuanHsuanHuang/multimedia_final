@@ -1,4 +1,4 @@
-from flask import Flask, render_template_string, Response, jsonify, request
+from flask import Flask, render_template, Response, jsonify, request
 import cv2
 from PIL import Image
 from io import BytesIO
@@ -21,6 +21,7 @@ def generate_frames():
         if not success:
             break
         else:
+            # 將畫面水平鏡像
             frame = cv2.flip(frame, 1)
             ret, buffer = cv2.imencode('.jpg', frame)
             frame = buffer.tobytes()
@@ -29,56 +30,7 @@ def generate_frames():
 
 @app.route('/')
 def index():
-    # HTML 字符串，包含彩色漸層的標題和按鈕
-    html_content = """
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Filter Selection</title>
-        <style>
-            #right-frame {
-                width: 50%;
-                height: 100vh;
-                box-sizing: border-box;
-                background: linear-gradient(to bottom, #4CAF50, #45a049);
-                color: white;
-                text-align: center;
-                padding: 20px;
-            }
-
-            h1 {
-                font-weight: bold;
-            }
-
-            button {
-                margin: 10px;
-                padding: 10px;
-                font-size: 16px;
-                background-color: #008CBA;
-                color: white;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-            }
-        </style>
-    </head>
-    <body>
-        <div id="left-frame"></div>
-        <div id="right-frame">
-            <h1>請挑選濾鏡</h1>
-            <button>a</button>
-            <button>b</button>
-            <button>c</button>
-            <button>d</button>
-            <button>e</button>
-        </div>
-    </body>
-    </html>
-    """
-
-    return render_template_string(html_content)
+    return render_template('index.html')
 
 @app.route('/video_feed')
 def video_feed():
