@@ -12,7 +12,7 @@
             if (currentMode === 'camera') {
                 fetch('/take_snapshot', {
                     method: 'POST',
-                    body: new URLSearchParams({ mode: currentMode }),
+                    body: new URLSearchParams({ mode: currentMode, apply_black_and_white_filter: 'true' }),
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
                     },
@@ -49,14 +49,24 @@
                 document.getElementById('image-mode').style.display = 'block';
             }
         }
+
+        function activateBlackAndWhiteMode() {
+            fetch('/activate_black_and_white_mode', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);  // 這裡可以根據後端返回的訊息進行相應處理
+            });
+        }
     </script>
 </head>
 <body>
     <style>
 
-        
-
-        
         body{
 			background-color: white;
 		}
@@ -137,12 +147,12 @@
 	text-align: center;
 }
 
-		#popo{
+	#popo{
 
-			color:rgba(138, 118, 174, 0.7);
-			border-style:double;
-			text-align:center;
-		}
+		color:rgba(138, 118, 174, 0.7);
+		border-style:double;
+		text-align:center;
+	}
 
 		
     #pp{
@@ -165,7 +175,7 @@
     <button onclick="setMode('image')" class="dropbtn">選擇照片模式</button>
     </div><p id="popo"></p></div>
 
-    <table border id="pp"><tr>
+    <table id="pp"><tr>
     <td>
         <div id="camera-mode">
         <img src="{{ url_for('video_feed') }}" width="640" height="480" id="camera-preview">
@@ -182,7 +192,7 @@
 
     <td>
         <h1>請挑選濾鏡</h1>
-        <button class="dropbtn"><a>黑白風</a></button>
+        <button onclick="activateBlackAndWhiteMode()" class="dropbtn"><a>黑白風</a></button>
         <button class="dropbtn"><a>像素風</a></button>
         <button class="dropbtn"><a>復古風</a></button>
         <button class="dropbtn"><a>鮮豔風</a></button>
