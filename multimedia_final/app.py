@@ -126,7 +126,7 @@ def activate_adaptive_gaussian_thresholding_mode():
     return Response(generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/activate_gaussian_blur_mode', methods=['POST'])
-def activate_gaussian_blur_complement_mode():
+def activate_gaussian_blur_mode():
     global original_mode, black_and_white_mode, canny_mode, adaptive_gaussian_thresholding_mode, gaussian_blur_mode, convex_mode
     original_mode = False
     black_and_white_mode = False
@@ -137,7 +137,7 @@ def activate_gaussian_blur_complement_mode():
     return Response(generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/activate_convex_mode', methods=['POST'])
-def activate_color_complement_mode():
+def activate_convex_mode():
     global original_mode, black_and_white_mode, canny_mode, adaptive_gaussian_thresholding_mode, gaussian_blur_mode, convex_mode
     original_mode = False
     black_and_white_mode = False
@@ -149,7 +149,7 @@ def activate_color_complement_mode():
 
 @app.route('/take_snapshot', methods=['POST'])
 def take_snapshot():
-    global original_mode, black_and_white_mode, canny_mode, adaptive_gaussian_thresholding_mode, gaussian_blur_mode, color_complement_mode    
+    global original_mode, black_and_white_mode, canny_mode, adaptive_gaussian_thresholding_mode, gaussian_blur_mode, convex_mode    
     mode = request.form.get('mode')
     if mode == 'camera':
         ret, frame = cap.read()
