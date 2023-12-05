@@ -9,12 +9,10 @@
         var currentMode = 'camera';
 
         function takeSnapshot() {
-            if (currentMode == 'camera') {
+            if (currentMode === 'camera') {
                 fetch('/take_snapshot', {
                     method: 'POST',
-                    body: new URLSearchParams({ 
-                        mode: currentMode, 
-                    }),
+                    body: new URLSearchParams({ mode: currentMode, apply_black_and_white_filter: 'true' }),
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
                     },
@@ -24,7 +22,6 @@
                     alert(data.message);
                 });
             }
-
         }
 
         function previewImage(input) {
@@ -52,6 +49,7 @@
                 document.getElementById('image-mode').style.display = 'block';
             }
         }
+
         function activateOriginalMode() {
             fetch('/activate_original_mode', {
                 method: 'POST',
@@ -65,6 +63,7 @@
                 setMode('camera');
             });
         }
+
         function activateBlackAndWhiteMode() {
             fetch('/activate_black_and_white_mode', {
                 method: 'POST',
@@ -78,6 +77,7 @@
                 setMode('camera');
             });
         }
+
         function activateCannyMode() {
             fetch('/activate_canny_mode', {
                 method: 'POST',        
@@ -91,6 +91,7 @@
                 setMode('camera');
             });
         }
+
         function activateGaussianMode() {
             fetch('/activate_adaptive_gaussian_thresholding_mode', {
                 method: 'POST',
@@ -104,6 +105,7 @@
                 setMode('camera');
             });
         }
+
         function activateGaussianBlurMode() {
             fetch('/activate_gaussian_blur_mode', {
                 method: 'POST',
@@ -117,6 +119,7 @@
                 setMode('camera');
             });
         }
+
         function activateConvexMode() {
             fetch('/activate_convex_mode', {
                 method: 'POST',
@@ -130,13 +133,12 @@
                 setMode('camera');
             });
         }
-
-
     </script>
 </head>
 <body>
     <style>
-body{
+
+        body{
 			background-color: white;
             
 		}
@@ -265,13 +267,16 @@ table{
     <div class="na">
     <div class="dropdown">
     <button onclick="setMode('camera')" class="dropbtn"><a>拍照模式</a></button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    |
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <button onclick="setMode('image')" class="dropbtn"><a>選擇照片模式</a></button>
     </div><p id="popo"></p></div>
 
-    <table id="pp"><tr>
+    <table border id="pp"><tr>
     <td>
         <div id="camera-mode">
-        <img src="{{ url_for('video_feed') }}" width="640" height="480" id="camera-preview">
+        <img src="{{ url_for('video_feed') }}" width="900" height="650" id="camera-preview">
         </td>
     </div>
     
@@ -286,18 +291,27 @@ table{
     <td>
         <h1>請挑選濾鏡</h1>
         <div class="dropdown">
+        &nbsp;&nbsp;&nbsp;
         <button onclick="activateOriginalMode()" class="dropbtn"><a>原相機</a></button>
+        &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
         <button onclick="activateBlackAndWhiteMode()" class="dropbtn"><a>黑白風</a></button>
+        &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
         <button onclick="activateCannyMode()" class="dropbtn"><a>線條風</a></button>
-        
+        &nbsp;&nbsp;&nbsp;
         <br> <br>
+        &nbsp;&nbsp;&nbsp;
         <button onclick="activateGaussianMode()" class="dropbtn"><a>二值化</a></button>
+        &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
         <button onclick="activateGaussianBlurMode()" class="dropbtn"><a>高斯模糊</a></button>
+        &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
         <button onclick="activateConvexMode()" class="dropbtn"><a>魚眼</a></button>
+        &nbsp;&nbsp;&nbsp;
         
         </div>
     <br> <br>  
     <div class="dropdown">
+        &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
     <button onclick="takeSnapshot()"  class="dropbtn" id="p">拍照</button></br>
     </div>
     </td>
